@@ -5,11 +5,11 @@
 
 import axios from 'axios';
 
-// Determine base URL based on environment
+// Backend API URL (hard coded)
 const isDevelopment = import.meta.env.MODE === 'development';
 const baseURL = isDevelopment 
   ? '/api'  // Use Vite proxy in development to avoid CORS
-  : '/api'; // Use Vercel serverless proxy in production to handle HTTP backend
+  : 'http://212.132.99.95:8081'; // Production backend URL
 
 // Create axios instance with base configuration
 const api = axios.create({
