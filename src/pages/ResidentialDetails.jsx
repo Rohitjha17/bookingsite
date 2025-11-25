@@ -12,12 +12,15 @@ import {
   toggleExtra,
   setCleaningProducts,
   setHasPets,
+  setPetsDescription,
   setAccessMethod,
+  setKeyLocation,
+  setOtherAccessInfo,
   setSpecialNotes,
 } from '@store/slices/bookingSlice';
 import { useFormNavigation } from '@hooks/useFormNavigation';
 import { useBookingPrice } from '@hooks/useBookingPrice';
-import { Button, SelectionCard, Radio, Textarea } from '@components/ui';
+import { Button, SelectionCard, Radio, Textarea, Input } from '@components/ui';
 import {
   FREQUENCY_OPTIONS,
   BEDROOM_OPTIONS,
@@ -178,6 +181,18 @@ const ResidentialDetails = () => {
             title="No"
           />
         </div>
+
+        {/* Conditional: Pet Description */}
+        {booking.hasPets === true && (
+          <div className="mt-4 max-w-2xl">
+            <Input
+              label="Pet Details"
+              placeholder="E.g., Dog and cat in house, friendly but may bark"
+              value={booking.petsDescription}
+              onChange={(e) => dispatch(setPetsDescription(e.target.value))}
+            />
+          </div>
+        )}
       </section>
 
       {/* Access Method */}
@@ -196,6 +211,31 @@ const ResidentialDetails = () => {
             />
           ))}
         </div>
+
+        {/* Conditional: Key Location */}
+        {booking.accessMethod === 'hidden_key' && (
+          <div className="mt-4 max-w-2xl">
+            <Input
+              label="Where is the key hidden?"
+              placeholder="E.g., Under the mat, in the mailbox"
+              value={booking.keyLocation}
+              onChange={(e) => dispatch(setKeyLocation(e.target.value))}
+            />
+          </div>
+        )}
+
+        {/* Conditional: Other Access Description */}
+        {booking.accessMethod === 'other' && (
+          <div className="mt-4 max-w-2xl">
+            <Textarea
+              label="Please describe how we can access your home"
+              placeholder="E.g., Call me when you arrive, neighbor has the key"
+              value={booking.otherAccessInfo}
+              onChange={(e) => dispatch(setOtherAccessInfo(e.target.value))}
+              rows={3}
+            />
+          </div>
+        )}
       </section>
 
       {/* Special Notes */}

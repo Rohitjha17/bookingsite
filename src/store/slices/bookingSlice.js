@@ -20,7 +20,10 @@ const initialState = {
   extras: [],
   cleaningProducts: 'normal',
   hasPets: null,
+  petsDescription: '',
   accessMethod: null,
+  keyLocation: '',
+  otherAccessInfo: '',
   specialNotes: '',
 
   // Hourly Standard specific
@@ -149,10 +152,19 @@ const bookingSlice = createSlice({
     setHasPets: (state, action) => {
       state.hasPets = action.payload;
     },
+    setPetsDescription: (state, action) => {
+      state.petsDescription = action.payload;
+    },
 
     // Access Method
     setAccessMethod: (state, action) => {
       state.accessMethod = action.payload;
+    },
+    setKeyLocation: (state, action) => {
+      state.keyLocation = action.payload;
+    },
+    setOtherAccessInfo: (state, action) => {
+      state.otherAccessInfo = action.payload;
     },
 
     // Special Notes
@@ -262,7 +274,10 @@ export const {
   setExtras,
   setCleaningProducts,
   setHasPets,
+  setPetsDescription,
   setAccessMethod,
+  setKeyLocation,
+  setOtherAccessInfo,
   setSpecialNotes,
   setHours,
   setNumberOfCleaners,

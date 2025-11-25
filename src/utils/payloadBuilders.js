@@ -140,14 +140,16 @@ export const buildResidentialBookingPayload = (booking) => ({
   Extras: getExtrasNames(booking.extras),
   CleaningProducts: getCleaningProductsLabel(booking.cleaningProducts),
   isPets: Boolean(booking.hasPets),
-  isPetsDescription: booking.hasPets ? 'Pets present' : 'No pets',
+  isPetsDescription: booking.hasPets 
+    ? (booking.petsDescription || 'Pets present')
+    : 'No pets',
   HowGetIn: getAccessMethodLabel(booking.accessMethod),
-  KeyHiddenLocation:
-    booking.accessMethod === 'hidden_key' ? 'Shared upon arrival' : '',
-  OtherDescriptionGetIn:
-    booking.accessMethod === 'other'
-      ? booking.specialNotes || 'Additional instructions provided'
-      : '',
+  KeyHiddenLocation: booking.accessMethod === 'hidden_key' 
+    ? (booking.keyLocation || 'Will be shared')
+    : '',
+  OtherDescriptionGetIn: booking.accessMethod === 'other'
+    ? (booking.otherAccessInfo || booking.specialNotes || 'Additional instructions provided')
+    : '',
   Notes: booking.specialNotes || 'No additional notes',
   DateTime: formatDateTimeISO(booking.dateTime),
   Address: getAddressString(booking.address),
@@ -163,14 +165,16 @@ export const buildHourlyBookingPayload = (booking) => ({
   NoOfBathrooms: getBathroomsCount(booking.bathrooms),
   Extras: getExtrasNames(booking.extras),
   isPets: Boolean(booking.hasPets),
-  isPetsDescription: booking.hasPets ? 'Pets present' : 'No pets',
+  isPetsDescription: booking.hasPets 
+    ? (booking.petsDescription || 'Pets present')
+    : 'No pets',
   HowGetIn: getAccessMethodLabel(booking.accessMethod),
-  KeyHiddenLocation:
-    booking.accessMethod === 'hidden_key' ? 'Shared upon arrival' : '',
-  OtherDescriptionGetIn:
-    booking.accessMethod === 'other'
-      ? booking.specialNotes || 'Additional instructions provided'
-      : '',
+  KeyHiddenLocation: booking.accessMethod === 'hidden_key' 
+    ? (booking.keyLocation || 'Will be shared')
+    : '',
+  OtherDescriptionGetIn: booking.accessMethod === 'other'
+    ? (booking.otherAccessInfo || booking.specialNotes || 'Additional instructions provided')
+    : '',
   Notes: booking.specialNotes || 'No additional notes',
   DateTime: formatDateTimeISO(booking.dateTime),
   Address: getAddressString(booking.address),
