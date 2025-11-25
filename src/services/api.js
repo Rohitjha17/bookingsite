@@ -9,7 +9,7 @@ import axios from 'axios';
 const isDevelopment = import.meta.env.MODE === 'development';
 const baseURL = isDevelopment 
   ? '/api'  // Use Vite proxy in development to avoid CORS
-  : import.meta.env.VITE_API_BASE_URL || 'http://212.132.99.95:8081';
+  : '/api'; // Use Vercel serverless proxy in production to handle HTTP backend
 
 // Create axios instance with base configuration
 const api = axios.create({
