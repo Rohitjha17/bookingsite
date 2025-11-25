@@ -6,7 +6,8 @@
 import axios from 'axios';
 
 // Backend API URL (hard coded)
-const isDevelopment = import.meta.env.MODE === 'development';
+// Check if running on localhost (development)
+const isDevelopment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
 const baseURL = isDevelopment 
   ? '/api'  // Use Vite proxy in development to avoid CORS
   : 'http://212.132.99.95:8081'; // Production backend URL
