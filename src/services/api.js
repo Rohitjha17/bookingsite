@@ -12,6 +12,14 @@ const baseURL = isDevelopment
   ? '/api'  // Use Vite proxy in development to avoid CORS
   : 'http://212.132.99.95:8081'; // Production backend URL
 
+// Debug: Log environment info
+console.log('🌐 API Config:', {
+  hostname: window.location.hostname,
+  isDevelopment,
+  baseURL,
+  fullURL: window.location.href
+});
+
 // Create axios instance with base configuration
 const api = axios.create({
   baseURL,
