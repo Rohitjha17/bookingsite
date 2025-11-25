@@ -10,6 +10,7 @@ const initialState = {
   error: null,
   currentStep: 1,
   showSummary: true,
+  cookieConsent: null,
   modals: {
     faq: false,
     coupon: false,
@@ -41,6 +42,9 @@ const uiSlice = createSlice({
     setShowSummary: (state, action) => {
       state.showSummary = action.payload;
     },
+    setCookieConsent: (state, action) => {
+      state.cookieConsent = action.payload;
+    },
     openModal: (state, action) => {
       state.modals[action.payload] = true;
     },
@@ -58,6 +62,7 @@ export const {
   nextStep,
   previousStep,
   setShowSummary,
+  setCookieConsent,
   openModal,
   closeModal,
 } = uiSlice.actions;
