@@ -8,15 +8,19 @@ import axios from 'axios';
 // Backend API URL (hard coded)
 // Check if running on localhost (development)
 const isDevelopment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+
+// In production, use Vercel serverless function as proxy to avoid Mixed Content error
+// (HTTPS page can't call HTTP API directly, browser blocks it)
 const baseURL = isDevelopment 
   ? '/api'  // Use Vite proxy in development to avoid CORS
-  : 'http://212.132.99.95:8081'; // Production backend URL
+  : '/api/proxy'; // Production: Use Vercel serverless function as proxy
 
 // Debug: Log environment info
 console.log('🌐 API Config:', {
   hostname: window.location.hostname,
   isDevelopment,
   baseURL,
+  note: isDevelopment ? 'Using Vite proxy' : 'Using Vercel serverless proxy',
   fullURL: window.location.href
 });
 
@@ -37,6 +41,13 @@ api.interceptors.request.use(
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
+
+    // If using Vercel proxy in production, add path as query parameter
+    if (!isDevelopment && config.url) {
+      const apiPath = config.url.startsWith('/') ? config.url : `/${config.url}`;
+      config.url = `?path=${encodeURIComponent(apiPath)}`;
+    }
+
     return config;
   },
   (error) => {
