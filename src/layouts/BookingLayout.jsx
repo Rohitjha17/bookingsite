@@ -6,7 +6,7 @@
 import React from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { Header, ProgressBar, CookieConsent } from '@components/common';
+import { Header, ProgressBar } from '@components/common';
 import BookingSummary from '@components/booking/BookingSummary';
 import { selectServiceType } from '@store/slices/bookingSlice';
 
@@ -40,8 +40,6 @@ const BookingLayout = () => {
           )}
         </div>
       </div>
-
-      <CookieConsent />
     </div>
   );
 };

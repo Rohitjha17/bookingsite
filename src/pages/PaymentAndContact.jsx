@@ -320,10 +320,7 @@ const PaymentAndContact = () => {
         </div>
 
         <p className="text-sm text-gray-600">
-          No payment due until after your cleaning. Satisfaction guaranteed.{' '}
-          <a href="#" className="text-primary-600 hover:underline">
-            View our refund policy
-          </a>
+          No payment due until after your cleaning. Satisfaction guaranteed.
         </p>
       </section>
 
