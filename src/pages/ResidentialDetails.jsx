@@ -3,7 +3,7 @@
  * Service details for residential cleaning
  */
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   setFrequency,
@@ -20,7 +20,7 @@ import {
 } from '@store/slices/bookingSlice';
 import { useFormNavigation } from '@hooks/useFormNavigation';
 import { useBookingPrice } from '@hooks/useBookingPrice';
-import { Button, SelectionCard, Radio, Textarea, Input } from '@components/ui';
+import { Button, SelectionCard, Textarea, Input } from '@components/ui';
 import {
   FREQUENCY_OPTIONS,
   BEDROOM_OPTIONS,
@@ -39,7 +39,7 @@ const ResidentialDetails = () => {
   useBookingPrice(); // Auto-calculate pricing
 
   const handleContinue = () => {
-    if (booking.bedrooms && booking.bathrooms && booking.accessMethod && booking.hasPets !== null) {
+    if (booking?.bedrooms && booking?.bathrooms && booking?.accessMethod && booking?.hasPets !== null) {
       goToNextStep('/booking/residential-details');
     }
   };
@@ -74,7 +74,7 @@ const ResidentialDetails = () => {
           {FREQUENCY_OPTIONS.map((freq) => (
             <SelectionCard
               key={freq.id}
-              selected={booking.frequency === freq.id}
+              selected={booking?.frequency === freq.id}
               onClick={() => dispatch(setFrequency(freq.id))}
               title={freq.name}
               badge={freq.discount > 0 ? `${freq.discount}% off` : null}
@@ -93,7 +93,7 @@ const ResidentialDetails = () => {
           {BEDROOM_OPTIONS.map((bedroom) => (
             <SelectionCard
               key={bedroom.id}
-              selected={booking.bedrooms === bedroom.id}
+              selected={booking?.bedrooms === bedroom.id}
               onClick={() => dispatch(setBedrooms(bedroom.id))}
               title={bedroom.name}
               subtitle={bedroom.price > 0 ? `+${formatPrice(bedroom.price)}` : null}
@@ -112,7 +112,7 @@ const ResidentialDetails = () => {
           {BATHROOM_OPTIONS.map((bathroom) => (
             <SelectionCard
               key={bathroom.id}
-              selected={booking.bathrooms === bathroom.id}
+              selected={booking?.bathrooms === bathroom.id}
               onClick={() => dispatch(setBathrooms(bathroom.id))}
               title={bathroom.name}
               subtitle={bathroom.price > 0 ? `+${formatPrice(bathroom.price)}` : null}
@@ -134,7 +134,7 @@ const ResidentialDetails = () => {
           {EXTRAS.map((extra) => (
             <SelectionCard
               key={extra.id}
-              selected={booking.extras.includes(extra.id)}
+              selected={booking?.extras?.includes(extra.id) || false}
               onClick={() => dispatch(toggleExtra(extra.id))}
               icon={extra.icon}
               title={extra.name}
@@ -154,7 +154,7 @@ const ResidentialDetails = () => {
           {CLEANING_PRODUCTS.map((product) => (
             <SelectionCard
               key={product.id}
-              selected={booking.cleaningProducts === product.id}
+              selected={booking?.cleaningProducts === product.id}
               onClick={() => dispatch(setCleaningProducts(product.id))}
               title={product.name}
               subtitle={product.description}
@@ -171,24 +171,24 @@ const ResidentialDetails = () => {
 
         <div className="grid grid-cols-2 gap-4 max-w-md">
           <SelectionCard
-            selected={booking.hasPets === true}
+            selected={booking?.hasPets === true}
             onClick={() => dispatch(setHasPets(true))}
             title="Yes"
           />
           <SelectionCard
-            selected={booking.hasPets === false}
+            selected={booking?.hasPets === false}
             onClick={() => dispatch(setHasPets(false))}
             title="No"
           />
         </div>
 
         {/* Conditional: Pet Description */}
-        {booking.hasPets === true && (
+        {booking?.hasPets === true && (
           <div className="mt-4 max-w-2xl">
             <Input
               label="Pet Details"
               placeholder="E.g., Dog and cat in house, friendly but may bark"
-              value={booking.petsDescription}
+              value={booking?.petsDescription || ''}
               onChange={(e) => dispatch(setPetsDescription(e.target.value))}
             />
           </div>
@@ -205,7 +205,7 @@ const ResidentialDetails = () => {
           {ACCESS_METHODS.map((method) => (
             <SelectionCard
               key={method.id}
-              selected={booking.accessMethod === method.id}
+              selected={booking?.accessMethod === method.id}
               onClick={() => dispatch(setAccessMethod(method.id))}
               title={method.name}
             />
@@ -213,24 +213,24 @@ const ResidentialDetails = () => {
         </div>
 
         {/* Conditional: Key Location */}
-        {booking.accessMethod === 'hidden_key' && (
+        {booking?.accessMethod === 'hidden_key' && (
           <div className="mt-4 max-w-2xl">
             <Input
               label="Where is the key hidden?"
               placeholder="E.g., Under the mat, in the mailbox"
-              value={booking.keyLocation}
+              value={booking?.keyLocation || ''}
               onChange={(e) => dispatch(setKeyLocation(e.target.value))}
             />
           </div>
         )}
 
         {/* Conditional: Other Access Description */}
-        {booking.accessMethod === 'other' && (
+        {booking?.accessMethod === 'other' && (
           <div className="mt-4 max-w-2xl">
             <Textarea
               label="Please describe how we can access your home"
               placeholder="E.g., Call me when you arrive, neighbor has the key"
-              value={booking.otherAccessInfo}
+              value={booking?.otherAccessInfo || ''}
               onChange={(e) => dispatch(setOtherAccessInfo(e.target.value))}
               rows={3}
             />
@@ -246,7 +246,7 @@ const ResidentialDetails = () => {
 
         <Textarea
           placeholder="E.g. please dust under the bed and empty the dishwasher..."
-          value={booking.specialNotes}
+          value={booking?.specialNotes || ''}
           onChange={(e) => dispatch(setSpecialNotes(e.target.value))}
           rows={4}
         />
@@ -282,7 +282,7 @@ const ResidentialDetails = () => {
       <div className="flex justify-end pb-8">
         <Button
           onClick={handleContinue}
-          disabled={!booking.bedrooms || !booking.bathrooms || !booking.accessMethod || booking.hasPets === null}
+          disabled={!booking?.bedrooms || !booking?.bathrooms || !booking?.accessMethod || booking?.hasPets === null}
           size="lg"
         >
           Continue

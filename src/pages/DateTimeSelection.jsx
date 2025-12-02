@@ -40,7 +40,7 @@ const DateTimeSelection = () => {
   };
 
   const handleContinue = () => {
-    if (booking.dateTime.date && booking.dateTime.time) {
+    if (booking?.dateTime?.date && booking?.dateTime?.time) {
       goToNextStep('/booking/datetime');
     }
   };
@@ -99,7 +99,7 @@ const DateTimeSelection = () => {
           <div className="grid grid-cols-7 gap-2 flex-1 mx-4">
             {visibleDates.map((date, index) => {
               const isSelected =
-                booking.dateTime.date &&
+                booking?.dateTime?.date &&
                 new Date(booking.dateTime.date).toDateString() === date.date.toDateString();
 
               return (
@@ -137,7 +137,7 @@ const DateTimeSelection = () => {
       </section>
 
       {/* Time Slots */}
-      {booking.dateTime.date && (
+      {booking?.dateTime?.date && (
         <section>
           <h2 className="text-xl font-semibold text-gray-900 mb-4">
             Select Time
@@ -145,7 +145,7 @@ const DateTimeSelection = () => {
 
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
             {availableSlots.map((slot, index) => {
-              const isSelected = booking.dateTime.time === slot.label;
+              const isSelected = booking?.dateTime?.time === slot.label;
 
               return (
                 <button
@@ -170,7 +170,7 @@ const DateTimeSelection = () => {
       <div className="flex justify-end pb-8">
         <Button
           onClick={handleContinue}
-          disabled={!booking.dateTime.date || !booking.dateTime.time}
+          disabled={!booking?.dateTime?.date || !booking?.dateTime?.time}
           size="lg"
         >
           Continue

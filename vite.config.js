@@ -17,12 +17,13 @@ export default defineConfig({
     },
   },
   server: {
-    port: 3000,
+    port: 3002,
     open: true,
     proxy: {
       '/api': {
-        target: 'http://212.132.99.95:8081',
+        target: 'https://dev.shinehub.de',
         changeOrigin: true,
+        secure: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
     },

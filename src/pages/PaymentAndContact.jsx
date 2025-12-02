@@ -16,7 +16,7 @@ import {
 } from '@store/slices/bookingSlice';
 import { setLoading, setError } from '@store/slices/uiSlice';
 import { useFormNavigation } from '@hooks/useFormNavigation';
-import { Button, Input, Checkbox } from '@components/ui';
+import { Button, Input, Checkbox, LoadingSpinner } from '@components/ui';
 import { SERVICE_TYPES, TIP_OPTIONS } from '@constants';
 import {
   formatCardNumber,
@@ -435,6 +435,12 @@ const PaymentAndContact = () => {
           <p className="text-sm text-red-600 text-right mb-3 w-full">
             {submissionError}
           </p>
+        )}
+        {loading && (
+          <div className="flex items-center justify-center mb-4 w-full">
+            <LoadingSpinner size="md" />
+            <span className="ml-3 text-gray-600">Processing your booking...</span>
+          </div>
         )}
         <Button
           onClick={handleBookNow}

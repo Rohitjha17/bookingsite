@@ -37,12 +37,12 @@ const HourlyStandardDetails = () => {
 
   const handleContinue = () => {
     if (
-      booking.hours >= 1 &&
-      booking.numberOfCleaners >= 1 &&
-      booking.bedrooms &&
-      booking.bathrooms &&
-      booking.accessMethod &&
-      booking.hasPets !== null
+      booking?.hours >= 1 &&
+      booking?.numberOfCleaners >= 1 &&
+      booking?.bedrooms &&
+      booking?.bathrooms &&
+      booking?.accessMethod &&
+      booking?.hasPets !== null
     ) {
       goToNextStep('/booking/hourly-details');
     }
@@ -85,16 +85,16 @@ const HourlyStandardDetails = () => {
 
         <div className="flex items-center space-x-4">
           <button
-            onClick={() => dispatch(setHours(Math.max(1, booking.hours - 1)))}
+            onClick={() => dispatch(setHours(Math.max(1, (booking?.hours || 3) - 1)))}
             className="w-12 h-12 rounded-full bg-white border-2 border-primary-600 text-primary-600 hover:bg-primary-50 flex items-center justify-center font-bold text-xl"
           >
             −
           </button>
           <div className="text-3xl font-bold text-gray-900 min-w-[60px] text-center">
-            {booking.hours}
+            {booking?.hours || 3}
           </div>
           <button
-            onClick={() => dispatch(setHours(booking.hours + 1))}
+            onClick={() => dispatch(setHours((booking?.hours || 3) + 1))}
             className="w-12 h-12 rounded-full bg-primary-600 text-white hover:bg-primary-700 flex items-center justify-center font-bold text-xl"
           >
             +
@@ -113,16 +113,16 @@ const HourlyStandardDetails = () => {
 
         <div className="flex items-center space-x-4">
           <button
-            onClick={() => dispatch(setNumberOfCleaners(Math.max(1, booking.numberOfCleaners - 1)))}
+            onClick={() => dispatch(setNumberOfCleaners(Math.max(1, (booking?.numberOfCleaners || 1) - 1)))}
             className="w-12 h-12 rounded-full bg-white border-2 border-primary-600 text-primary-600 hover:bg-primary-50 flex items-center justify-center font-bold text-xl"
           >
             −
           </button>
           <div className="text-3xl font-bold text-gray-900 min-w-[60px] text-center">
-            {booking.numberOfCleaners}
+            {booking?.numberOfCleaners || 1}
           </div>
           <button
-            onClick={() => dispatch(setNumberOfCleaners(booking.numberOfCleaners + 1))}
+            onClick={() => dispatch(setNumberOfCleaners((booking?.numberOfCleaners || 1) + 1))}
             className="w-12 h-12 rounded-full bg-primary-600 text-white hover:bg-primary-700 flex items-center justify-center font-bold text-xl"
           >
             +
@@ -140,7 +140,7 @@ const HourlyStandardDetails = () => {
           {BEDROOM_OPTIONS.map((bedroom) => (
             <SelectionCard
               key={bedroom.id}
-              selected={booking.bedrooms === bedroom.id}
+              selected={booking?.bedrooms === bedroom.id}
               onClick={() => dispatch(setBedrooms(bedroom.id))}
               title={bedroom.name}
             />
@@ -158,7 +158,7 @@ const HourlyStandardDetails = () => {
           {BATHROOM_OPTIONS.map((bathroom) => (
             <SelectionCard
               key={bathroom.id}
-              selected={booking.bathrooms === bathroom.id}
+              selected={booking?.bathrooms === bathroom.id}
               onClick={() => dispatch(setBathrooms(bathroom.id))}
               title={bathroom.name}
             />
@@ -179,7 +179,7 @@ const HourlyStandardDetails = () => {
           {EXTRAS.map((extra) => (
             <SelectionCard
               key={extra.id}
-              selected={booking.extras.includes(extra.id)}
+              selected={booking?.extras?.includes(extra.id) || false}
               onClick={() => dispatch(toggleExtra(extra.id))}
               icon={extra.icon}
               title={extra.name}
@@ -197,24 +197,24 @@ const HourlyStandardDetails = () => {
 
         <div className="grid grid-cols-2 gap-4 max-w-md">
           <SelectionCard
-            selected={booking.hasPets === true}
+            selected={booking?.hasPets === true}
             onClick={() => dispatch(setHasPets(true))}
             title="Yes"
           />
           <SelectionCard
-            selected={booking.hasPets === false}
+            selected={booking?.hasPets === false}
             onClick={() => dispatch(setHasPets(false))}
             title="No"
           />
         </div>
 
         {/* Conditional: Pet Description */}
-        {booking.hasPets === true && (
+        {booking?.hasPets === true && (
           <div className="mt-4 max-w-2xl">
             <Input
               label="Pet Details"
               placeholder="E.g., Dog and cat in house, friendly but may bark"
-              value={booking.petsDescription}
+              value={booking?.petsDescription || ''}
               onChange={(e) => dispatch(setPetsDescription(e.target.value))}
             />
           </div>
@@ -231,7 +231,7 @@ const HourlyStandardDetails = () => {
           {ACCESS_METHODS.map((method) => (
             <SelectionCard
               key={method.id}
-              selected={booking.accessMethod === method.id}
+              selected={booking?.accessMethod === method.id}
               onClick={() => dispatch(setAccessMethod(method.id))}
               title={method.name}
             />
@@ -239,24 +239,24 @@ const HourlyStandardDetails = () => {
         </div>
 
         {/* Conditional: Key Location */}
-        {booking.accessMethod === 'hidden_key' && (
+        {booking?.accessMethod === 'hidden_key' && (
           <div className="mt-4 max-w-2xl">
             <Input
               label="Where is the key hidden?"
               placeholder="E.g., Under the mat, in the mailbox"
-              value={booking.keyLocation}
+              value={booking?.keyLocation || ''}
               onChange={(e) => dispatch(setKeyLocation(e.target.value))}
             />
           </div>
         )}
 
         {/* Conditional: Other Access Description */}
-        {booking.accessMethod === 'other' && (
+        {booking?.accessMethod === 'other' && (
           <div className="mt-4 max-w-2xl">
             <Textarea
               label="Please describe how we can access your home"
               placeholder="E.g., Call me when you arrive, neighbor has the key"
-              value={booking.otherAccessInfo}
+              value={booking?.otherAccessInfo || ''}
               onChange={(e) => dispatch(setOtherAccessInfo(e.target.value))}
               rows={3}
             />
@@ -272,7 +272,7 @@ const HourlyStandardDetails = () => {
 
         <Textarea
           placeholder="E.g. please dust under the bed and empty the dishwasher..."
-          value={booking.specialNotes}
+          value={booking?.specialNotes || ''}
           onChange={(e) => dispatch(setSpecialNotes(e.target.value))}
           rows={4}
         />
@@ -283,12 +283,12 @@ const HourlyStandardDetails = () => {
         <Button
           onClick={handleContinue}
           disabled={
-            !booking.hours ||
-            !booking.numberOfCleaners ||
-            !booking.bedrooms ||
-            !booking.bathrooms ||
-            !booking.accessMethod ||
-            booking.hasPets === null
+            !booking?.hours ||
+            !booking?.numberOfCleaners ||
+            !booking?.bedrooms ||
+            !booking?.bathrooms ||
+            !booking?.accessMethod ||
+            booking?.hasPets === null
           }
           size="lg"
         >

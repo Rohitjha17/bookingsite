@@ -20,6 +20,21 @@ import Card from '@components/ui/Card';
 const BookingSummary = () => {
   const booking = useSelector(selectBooking);
 
+  // Safety check - return loading skeleton if booking is not available
+  if (!booking) {
+    return (
+      <Card className="sticky top-24">
+        <div className="animate-pulse">
+          <div className="h-6 bg-gray-200 rounded mb-4"></div>
+          <div className="space-y-2">
+            <div className="h-4 bg-gray-200 rounded"></div>
+            <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+          </div>
+        </div>
+      </Card>
+    );
+  }
+
   // Get service name
   const service = SERVICE_OPTIONS.find((s) => s.id === booking.serviceType);
   const serviceName = service?.name || '';
@@ -106,7 +121,7 @@ const BookingSummary = () => {
       )}
 
       {/* Address */}
-      {booking.address.fullAddress && (
+      {booking.address?.fullAddress && (
         <div className="flex items-start mb-4 pb-4 border-b border-gray-200">
           <svg className="w-5 h-5 text-primary-600 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
@@ -116,7 +131,7 @@ const BookingSummary = () => {
             <div className="font-medium text-gray-900">
               {booking.address.fullAddress}
             </div>
-            {booking.address.apt && (
+            {booking.address?.apt && (
               <div className="text-gray-600">
                 {booking.address.apt}
               </div>
@@ -126,7 +141,7 @@ const BookingSummary = () => {
       )}
 
       {/* Date & Time */}
-      {booking.dateTime.date && (
+      {booking.dateTime?.date && (
         <div className="mb-4 pb-4 border-b border-gray-200">
           <div className="flex items-center mb-2">
             <svg className="w-5 h-5 text-primary-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -136,7 +151,7 @@ const BookingSummary = () => {
               {formatDateDisplay(booking.dateTime.date)}
             </span>
           </div>
-          {booking.dateTime.time && (
+          {booking.dateTime?.time && (
             <div className="text-sm text-gray-600 ml-7">
               {formatTimeDisplay(booking.dateTime.time)}
             </div>
@@ -175,11 +190,11 @@ const BookingSummary = () => {
             Today's Total
           </span>
           <span className="text-2xl font-bold text-primary-600">
-            {formatPrice(booking.pricing.finalTotal || booking.pricing.total || 0)}
+            {formatPrice(booking.pricing?.finalTotal || booking.pricing?.total || 0)}
           </span>
         </div>
 
-        {booking.pricing.discount > 0 && (
+        {booking.pricing?.discount > 0 && (
           <div className="mt-2 text-sm text-green-600">
             You save {formatPrice(booking.pricing.discount)} with {frequency?.name}
           </div>

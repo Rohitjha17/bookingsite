@@ -13,14 +13,14 @@ import { isAddressComplete } from '@utils/validation';
 const AddressInput = () => {
   const dispatch = useDispatch();
   const { goToNextStep, goToPreviousStep } = useFormNavigation();
-  const address = useSelector((state) => state.booking.address);
+  const address = useSelector((state) => state.booking?.address);
 
   const [formData, setFormData] = useState({
-    street: address.street || '',
-    apt: address.apt || '',
-    city: address.city || 'Chicago',
-    state: address.state || 'IL',
-    zipCode: address.zipCode || '',
+    street: address?.street || '',
+    apt: address?.apt || '',
+    city: address?.city || 'Chicago',
+    state: address?.state || 'IL',
+    zipCode: address?.zipCode || '',
   });
 
   const handleChange = (e) => {
